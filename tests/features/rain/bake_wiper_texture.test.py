@@ -23,6 +23,12 @@ class TestBakeWiperTexture(XPlaneTestCase):
         ].xplane.layer.rain.wiper_texture = ""
         bpy.data.objects["two_slot_wiper_system"].xplane.layer.rain.wiper_texture = ""
 
+        # Blender bakes to the image texture node that is active and selected.
+        # The nodes saved in the .blend file are active only
+        for mat in bpy.data.materials:
+            if mat.node_tree and mat.node_tree.nodes.active:
+                mat.node_tree.nodes.active.select = True
+
         # Just in case our test failed, we want to be neat for the developer's
         # folders
         shutil.rmtree(
